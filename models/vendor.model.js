@@ -1,4 +1,3 @@
-//mongoose model?
 import { Schema, model } from 'mongoose';
 
 let Vendor = new Schema({
