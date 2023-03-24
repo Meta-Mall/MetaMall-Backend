@@ -7,4 +7,8 @@ productRouter.post("/add", (req, res) => {
     productController.addProduct(req, res);
 })
 
+productRouter.get("/getStoreProducts/:store", (req, res)=>{
+    productController.getStoreProducts(req, res);
+})
+
 export default productRouter;
