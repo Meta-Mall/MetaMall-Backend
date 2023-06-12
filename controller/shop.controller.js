@@ -1,6 +1,14 @@
 import shopModel from "../models/shop.model.js"
 
 let controller = {}
+controller.getAllShops = async (_req, res) => {
+    try {
+        const shops = await shopModel.find({});
+        res.send(shops);
+    } catch (error) {
+        console.log("error in getallshops: ", error); 
+    }
+}
 
 controller.getShopProducts = async (req, res) => {
     try {
@@ -11,10 +19,11 @@ controller.getShopProducts = async (req, res) => {
     }
 }
 
-controller.addShop = async (shopNo) => {
+controller.addShop = async (req, res) => {
     try {
-        //initial all shops using this function
-        const shop = new shopModel({ shopNumber: shopNo, products_list : []});
+        const shopNo = req.body.shopNo;
+        console.log(req.body)
+        const shop = new shopModel({ shopNumber: shopNo, products_list: []});
         await shop.save();
         res.sendStatus(200);
     } catch (error) {
