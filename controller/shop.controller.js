@@ -1,12 +1,16 @@
 import shopModel from "../models/shop.model.js"
+import { Web3Storage, File } from 'web3.storage';
 
 let controller = {}
-controller.getAllShops = async (_req, res) => {
+const client = new Web3Storage({ token: process.env.WEB3STORAGE_TOKEN })
+
+controller.getProductModel = async (model_id) => {
     try {
-        const shops = await shopModel.find({});
-        res.send(shops);
+        const model = client.get(model_id);
+        return model;
     } catch (error) {
-        console.log("error in getallshops: ", error); 
+        console.log("error in get prodcut model: ", error);
+        
     }
 }
 
@@ -19,11 +23,10 @@ controller.getShopProducts = async (req, res) => {
     }
 }
 
-controller.addShop = async (req, res) => {
+controller.addShop = async (shopNo) => {
     try {
-        const shopNo = req.body.shopNo;
-        console.log(req.body)
-        const shop = new shopModel({ shopNumber: shopNo, products_list: []});
+        //initial all shops using this function
+        const shop = new shopModel({ shopNumber: shopNo, products_list : []});
         await shop.save();
         res.sendStatus(200);
     } catch (error) {
